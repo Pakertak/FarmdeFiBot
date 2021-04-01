@@ -1,4 +1,4 @@
-# FarmdeFiBot
+# Bot
 
 Необходимо установить [npm](https://nodejs.org/ru/)
 
