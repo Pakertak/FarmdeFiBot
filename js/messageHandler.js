@@ -1,5 +1,4 @@
 const validator = require('./validator');
-const debug = require('./debug');
 const config = require('../config');
 const CRUD = require('./database');
 const answer = config.bot.answers;
@@ -20,7 +19,10 @@ const messageHandler = async (bot, message) => {
 		delete bot.captches[fromId];
 		
 		// Creating user in database
-		CRUD.createUser(['telegramCode'], [fromId]);
+		if(await CRUD.createUser(['telegramCode', 'telegramusername'], [fromId, message.from.username]) === false) {
+			bot.sendMessage(chatId, answer.errors.serverError, answer.errors.config);
+			return false;
+		}
 
 		bot.sendMessage(chatId, answer.ethAddress.message, answer.ethAddress.config);
 		
@@ -39,12 +41,15 @@ const messageHandler = async (bot, message) => {
 		return false;
 	}
 
-	if (!user.ethAddress && validator(message.text, 'isAddress')) {
-		if (validator(message.text, 'checksumAddress')) {
+	if (!user.ethAddress) {
+		if (validator(message.text, 'isAddress') && validator(message.text, 'checksumAddress')) {
 			const tasks = answer.tasks;
 
 			// Saving ethAddress in database
-			CRUD.updateUser(user, ['ethAddress'], [message.text]);
+			if(await CRUD.updateUser(user, ['ethAddress'], [message.text]) === false) {
+				bot.sendMessage(chatId, answer.errors.serverError, answer.errors.config);
+				return false;
+			}
 			
 			// Sending tasks list with process config
 			bot.sendMessage(chatId, tasks.list.join('\r\n'), tasks.processConfig);
@@ -53,20 +58,27 @@ const messageHandler = async (bot, message) => {
 		}
 
 	} else {
-
 		// Saving twitter in database
-		if (user.ethAddress && bot.twitter[fromId]) {
-			if (checker.checkTwitterFollow(message)) {
-				CRUD.updateUser(user, ['twitter', 'airdroptaskscompleted', 'balance'], [message.text, true, user.balance + 500]);
+		if (bot.twitter[fromId]) {
+			const twitterFollow = await checker.checkTwitterFollow(message);
+			if (twitterFollow) {
+				if(await CRUD.updateUser(user, ['twitter', 'airdroptaskscompleted', 'balance'], [message.text, true, +user.balance + config.bot.tasksCost.value]) === false) {
+					bot.sendMessage(chatId, answer.errors.serverError, answer.errors.config);
+					return false;
+				}
+				bot.sendMessage(chatId, answer.сongratulations.text, answer.profile.config);
 				if (user.inviterId) {
-					CRUD.updateUserReferral(user, ['referralbalance'], [config.bot.referralCost])
+					if(await CRUD.updateUserReferral(user, ['referralbalance'], [config.bot.referralCost]) === false) {
+						bot.sendMessage(chatId, answer.errors.serverError, answer.errors.config);
+						return false;
+					}
 				}
 			} else {
-				bot.sendMessage(chatId, answer.twitter.error);		
+				bot.sendMessage(chatId, answer.twitter.error, answer.twitter.config);		
 			}
 			delete bot.twitter[fromId];
 		} else {
-			bot.sendMessage(chatId, answer.ethAddress.error, answer.ethAddress.config);
+			bot.sendMessage(chatId, answer.errors.default, answer.errors.config);
 		}
 	}
 	

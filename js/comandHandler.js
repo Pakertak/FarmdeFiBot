@@ -1,7 +1,5 @@
 const config = require('../config');
-const debug = require('./debug');
 const CRUD = require('./database');
-const queryHandler = require('./queryHandler');
 
 
 const answers = config.bot.answers;
@@ -26,7 +24,8 @@ const comands = {
 			return false;
 		} else {
 			if (user.tasksCompleted) {
-
+				const profile = answers.profile;
+				bot.sendMessage(chatId, profile.defaultText, profile.config);
 			} else {
 				const tasks = config.bot.answers.tasks;
 				bot.sendMessage(query.message.chat.id, tasks.list.join('\r\n'), tasks.processConfig);
@@ -38,7 +37,10 @@ const comands = {
 	// start with param
 	startParams: async (message, param) => {
 		if (parseInt(param) !== message.from.id) {
-			CRUD.createUserReferral(['telegramcode', 'referraltelegramcode'], [param, message.from.id]);
+			const user = await CRUD.readUsers({telegramId: message.from.id});
+			if (!user) {
+				CRUD.createUserReferral(['telegramcode', 'referraltelegramcode'], [param, message.from.id]);
+			}
 		}
 	}
 }

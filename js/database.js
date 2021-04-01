@@ -38,6 +38,7 @@ const CRUD = {
             }
         } catch (e) {
             console.error(e.stack);
+            return false;
         }
         return res;
     },
@@ -56,7 +57,6 @@ const CRUD = {
         let fields = [],
             res;
         try {
-
             for (let i = 0; i < params.length; i++ ) {
                 fields[i] = `${dbFields[i]} = $${i + 1}`;
             }
@@ -79,6 +79,7 @@ const CRUD = {
             }
         } catch (e) {
             console.error(e.stack);
+            return false;
         }
         return res;
     },
@@ -105,6 +106,7 @@ const CRUD = {
         SELECT 
             U.id "id",
             U.telegramCode "telegramId",
+            U.telegramusername "telegramUserName",
             U.balance "balance",
             U.twitter "twitter",
             U.ethaddress "ethAddress",
@@ -168,6 +170,7 @@ const CRUD = {
             }
         } catch (e) {
             console.error(e.stack);
+            return false;
         }
         return res;
     },

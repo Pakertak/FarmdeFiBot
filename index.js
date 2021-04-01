@@ -1,7 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 const config = require('./config');
 const queryHandler = require('./js/queryHandler');
-const debug = require('./js/debug');
 const messageHandler = require('./js/messageHandler');
 const comands = require('./js/comandHandler');
 
@@ -15,7 +14,6 @@ const bot = new TelegramBot(TOKEN, {
 bot.captches = {};
 bot.twitter = {};
 
-
 console.log('Bot has been started.');
 
 bot.on('message', message => {
@@ -23,12 +21,10 @@ bot.on('message', message => {
 });
 
 bot.onText(/\/start/, message => {
-	bot.sendMessage(message.chat.id, debug(message));
 	comands.start(bot, message);
 });
 
 bot.onText(/\/start (.+)/, (message, arr) => {
-	bot.sendMessage(message.chat.id, debug(message));
 	comands.startParams(message, arr[1]);
 });
 

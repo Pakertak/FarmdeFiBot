@@ -1,16 +1,17 @@
 const config = {
 	bot: {
 		token: '1661210150:AAEU0J9IwJBtMlxOnzKDlAzrkCWyezfIKcE',
+		twitterBearer: 'AAAAAAAAAAAAAAAAAAAAAEV4OAEAAAAA%2BOYyY%2FeMyQGhZ2rAIBwq05kB%2FTU%3DtsxJ6jSFcGsI37aJW4lg2SfLG6VMjl2qTeS6vYoDDz659so0NJ',
 		name: 'AirdropFarmdeFiBot',
 		answers: {
 
 			tasks: {
 				// The list of tasks that user should do
 				list: [
-					'a) Join the [group](https://www.google.by/)',
-					'b) Subscribe to the [channel](https://t.me/joinchat/8Sine2sPU8k5MTYy)',
-				 	'c) Subscribe to the [twitter](https://www.google.by/)',
-					'd) Retweet this [entry](https://www.google.by/)'
+					'a) Join the [group](https://t.me/joinchat/YmbNQObzd6dmZjYy)',
+					'b) Subscribe to the [channel](https://t.me/ddddtra)',
+				 	'c) Subscribe to the [twitter](https://twitter.com/owldao_)',
+					'd) Retweet this [entry](https://twitter.com/owldao_/)'
 				],
 				
 				// Controlling keyboard config
@@ -45,7 +46,7 @@ const config = {
 				details: {
 					telegramChatId: '-1001206151405',
 					telegramChannelId: '@ddddtra',
-					twitterChannelId: 124,
+					twitterChannelId: 'owldao_',
 					twitterPost: 'asga'
 				}
 			},
@@ -60,17 +61,28 @@ const config = {
 			// Telegram answers
 			telegram: {
 				message: 'Send me your twitter handle.',
-				error: 'You are not completed A and B tasks',
+				error: '*You didn\'t complete A and B tasks:\n*',
 				config: {
 					parse_mode: 'Markdown'
 				}
 			},
 			// Twitter answers
 			twitter: {
+				timeout: 30000,
 				message: 'Send me a twitter handler, please.',
 				error: 'This twitter account is not followed to our channel or not exist',
 				config: {
-					parse_mode: 'Markdown'
+					parse_mode: 'Markdown',
+					reply_markup: {
+						inline_keyboard: [
+							[
+								{
+									text: 'Try again',
+									callback_data: 'progress'
+								}
+							]
+						]
+					}
 				}
 			},
 			// First message
@@ -99,11 +111,13 @@ const config = {
 			},
 
 			profile: {
+				defaultText: 'Use buttons to get info.',
 				balance: 
-				`Balance: /balance/
-				Referral balance: /refBalance/`,
-				withdraw: 
-				`/payDate/`,
+				`Balance: /balance/ \nReferral balance: /refBalance/`,
+				withdraw: {
+					text: `/payDate/`,
+					empty: `Withdraw unset.`
+				},
 				referral: 
 				`/referral/`,
 				buy: 
@@ -129,7 +143,7 @@ const config = {
 									callback_data: 'referral'
 								}, {
 									text: 'BUY',
-									callback_data: 'buy'
+									url: 'https://www.google.by/'
 								}
 							],
 							[
@@ -145,6 +159,7 @@ const config = {
 
 			// Captcha validate
 			captcha: {
+				timeout: 30000,
 				check: {
 					// Text of the message
 					caption: `
@@ -176,12 +191,15 @@ const config = {
 			// Errors
 			errors: {
 				default: 'Sorry, I can\'t understand you.',
+				serverError: 'Sorry, we  can\'t process your message now. Try later, please.',
 				config: {
 					parse_mode: 'Markdown'
 				}
 			}
 		},
-
+		tasksCost: {
+			value: 500
+		},
 		referralCost: {
 			value: 100
 		}
