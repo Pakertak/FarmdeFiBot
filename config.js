@@ -211,7 +211,7 @@ const config = {
 		host: 'localhost',
 		port: 5432,
 		database: 'farmbotdatabase',
-		password: '' 
+		password: '12345678' 
 	}
 };
 
