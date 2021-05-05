@@ -125,7 +125,7 @@ const config = {
 				about: 
 				`About us`,
 				config: {
-					parse_mode: 'Markdown',
+					parse_mode: 'HTML',
 					reply_markup: {
 						inline_keyboard: [
 							[
@@ -210,7 +210,7 @@ const config = {
 		user: 'postgres',
 		host: 'localhost',
 		port: 5432,
-		database: 'farmbotdatabase',
+		database: 'FarmBotDatabase',
 		password: '12345678' 
 	}
 };
