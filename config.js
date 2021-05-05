@@ -1,15 +1,15 @@
 const config = {
 	bot: {
-		token: '1661210150:AAEU0J9IwJBtMlxOnzKDlAzrkCWyezfIKcE',
+		token: '1663113870:AAHu9DozssxTDcTDO-QYORmtwJc9-NFpSlo',
 		twitterBearer: 'AAAAAAAAAAAAAAAAAAAAAEV4OAEAAAAA%2BOYyY%2FeMyQGhZ2rAIBwq05kB%2FTU%3DtsxJ6jSFcGsI37aJW4lg2SfLG6VMjl2qTeS6vYoDDz659so0NJ',
-		name: 'AirdropFarmdeFiBot',
+		name: 'OwlDAO_bot',
 		answers: {
 
 			tasks: {
 				// The list of tasks that user should do
 				list: [
-					'a) Join the [group](https://t.me/joinchat/YmbNQObzd6dmZjYy)',
-					'b) Subscribe to the [channel](https://t.me/ddddtra)',
+					'a) Join the [group](https://t.me/joinchat/97KHpN6vZUMwZjYy)',
+					'b) Subscribe to the [channel](https://t.me/joinchat/s-w9SZDv9IE4OGRi)',
 				 	'c) Subscribe to the [twitter](https://twitter.com/owldao_)',
 					'd) Retweet this [entry](https://twitter.com/owldao_/)'
 				],
@@ -44,8 +44,8 @@ const config = {
 
 				// Tasks's details 
 				details: {
-					telegramChatId: '-1001206151405',
-					telegramChannelId: '@ddddtra',
+					telegramChatId: '-532951279',
+					telegramChannelId: '-1001166066444',
 					twitterChannelId: 'owldao_',
 					twitterPost: 'asga'
 				}
