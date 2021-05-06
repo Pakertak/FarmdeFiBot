@@ -10,7 +10,7 @@ const messageHandler = async (bot, message) => {
 				fromId = message.from.id;
 
 	// We are not using this method if the message is command
-	if (message.entities && message.entities[0].type === 'bot_command') {
+	if (message.entities && message.entities[0].type === 'bot_command' && message.text.includes('/start')) {
 		return false;
 	}
 
