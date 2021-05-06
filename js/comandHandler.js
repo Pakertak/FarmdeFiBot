@@ -27,8 +27,11 @@ const comands = {
 				const profile = answers.profile;
 				bot.sendMessage(chatId, profile.defaultText, profile.config);
 			} else {
-				const tasks = config.bot.answers.tasks;
-				bot.sendMessage(query.message.chat.id, tasks.list.join('\r\n'), tasks.processConfig);
+				if (user.ethAddress) {
+					const tasks = config.bot.answers.tasks;
+					bot.sendMessage(chatId, tasks.list.join('\r\n'), tasks.processConfig);
+				}
+				bot.sendMessage(chatId, answers.ethAddress.message, answers.ethAddress.config);
 			}
 		} 
 	},
