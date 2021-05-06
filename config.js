@@ -210,7 +210,7 @@ const config = {
 		user: 'postgres',
 		host: 'localhost',
 		port: 5432,
-		database: 'FarmBotDatabase',
+		database: 'farmbotdatabase',
 		password: '12345678' 
 	}
 };
